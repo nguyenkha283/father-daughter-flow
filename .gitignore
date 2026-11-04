@@ -14,3 +14,7 @@ assets/sfx/*
 !assets/**/.gitkeep
 loras/
 jobs/*/out/publish.json
+metrics.sqlite
+metrics-report.md
+training/
+raw/

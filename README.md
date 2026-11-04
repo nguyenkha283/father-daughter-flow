@@ -85,6 +85,45 @@ Actions voi Secrets.
 
 ---
 
+## Credential
+
+```
+python scripts/get_tokens.py youtube --write    # mo trinh duyet -> refresh token
+python scripts/get_tokens.py facebook --write   # token ngan han -> page token
+python scripts/get_tokens.py verify             # goi thu ca 3 nen tang
+python scripts/get_tokens.py secrets            # in lenh nap vao GitHub Secrets
+```
+
+X khong can script: 4 khoa lay thang o developer portal, dien vao `.env`.
+Scope YouTube xin san ca `yt-analytics.readonly` de sau nay `metrics.py` dung
+duoc ma khong phai dong y lai.
+
+## Train LoRA (lam mot lan)
+
+```
+python scripts/prep_dataset.py --kind girl --src raw/moonie --out training/girl
+rclone sync training gdrive:father-and-daughter/training
+```
+
+Roi mo `colab/Train_LoRA.ipynb`, train lan luot `dad` / `girl` / `style`.
+~60-90 phut moi LoRA tren T4.
+
+Script prep bat san: anh qua be, anh gan trung nhau (lam LoRA overfit), va
+thieu so luong. **Moonie 2 tuoi can >= 35 anh** — mat tre nho it dac diem
+rieng nen model rat de truot tuoi len 4-5.
+
+## Vong lap cai thien
+
+```
+python -m pipeline.metrics ingest    # map video <-> job
+python -m pipeline.metrics fetch     # keo YouTube Analytics
+python -m pipeline.metrics report    # -> metrics-report.md cho Claude doc
+```
+
+Doi chieu % xem het voi dac diem shotlist (do dai nhip lang, ti le parallax,
+lane cua hook, so set...). Voi duoi 10 video thi bao cao tu ghi ro moi ket
+luan deu la doan mo.
+
 ## Test
 
 ```

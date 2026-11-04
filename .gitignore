@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+tests/_tmp/
+colab_bridge/
+# File nang di qua Drive/rclone, khong vao git
+jobs/*/stills/
+jobs/*/depth/
+jobs/*/clips/
+jobs/*/out/*.mp4
+jobs/*/out/*.jpg
+assets/music/*
+assets/sfx/*
+!assets/**/.gitkeep
+loras/

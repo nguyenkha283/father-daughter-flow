@@ -1,0 +1,81 @@
+name: publish-daily
+
+# Khau publish song tach khoi may ban: khong token nao nam tren may cong ty,
+# va khong phu thuoc may nao dang bat.
+on:
+  schedule:
+    - cron: "37 11 * * *"      # 18:37 gio Viet Nam
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Duong dan job yaml (bo trong = job san sang cu nhat)"
+        required: false
+      dry_run:
+        description: "Chay thu, khong dang that"
+        type: boolean
+        default: false
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          pip install -q -r requirements-publish.txt
+
+      - name: Lay video tu Drive
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          curl -fsSL https://rclone.org/install.sh | sudo bash
+          mkdir -p ~/.config/rclone
+          printf '%s' "$RCLONE_CONF" | base64 -d > ~/.config/rclone/rclone.conf
+          rclone copy gdrive:father-and-daughter/final ./jobs \
+            --include "*/out/final.mp4" --include "*/out/contact.jpg"
+
+      - name: Publish
+        env:
+          YT_CLIENT_ID:     ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_PRIVACY:       ${{ vars.YT_PRIVACY }}      # 'private' cho den khi audit xong
+          FB_PAGE_ID:       ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN:    ${{ secrets.FB_PAGE_TOKEN }}
+          X_API_KEY:        ${{ secrets.X_API_KEY }}
+          X_API_SECRET:     ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN:   ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET:  ${{ secrets.X_ACCESS_SECRET }}
+        run: |
+          ARGS="${{ inputs.job && format('--job {0}', inputs.job) || '--next' }}"
+          [ "${{ inputs.dry_run }}" = "true" ] && ARGS="$ARGS --dry-run"
+          python -m publish.cli $ARGS
+
+      - name: Luu ket qua va share pack
+        if: always()
+        run: |
+          git config user.name  "fad-bot"
+          git config user.email "fad-bot@users.noreply.github.com"
+          git add -A jobs/*/state.json jobs/*/out/publish.json jobs/*/out/share-pack.md || true
+          git diff --cached --quiet || git commit -m "publish: ket qua $(date -u +%F)"
+          git push || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: share-pack
+          path: jobs/*/out/share-pack.md
+          if-no-files-found: ignore

@@ -1,0 +1,140 @@
+id: 2026-11-10_nom-am-hong-quan-ao
+title: The day the walls sweat
+logline: 'Mua nom. Tuong ri nuoc, quan ao phoi ba ngay khong kho. Bo keo quat cay
+  ra giua phong hong do cho Moonie, con be ngoi ghe nhua do nhin quan ao bay.
+
+  '
+season: nom
+time: chieu_vang
+music: assets/music/placeholder.mp3
+ambient:
+- assets/sfx/fan_hum.wav
+target_lufs: -14.0
+shots:
+- id: shot_01
+  beat: hook
+  set: phong_khach
+  lane: i2v
+  move: static
+  duration: 1.5
+  seed: 101
+  characters: []
+  motifs:
+  - quat_cay
+  prompt: close up, giot nuoc dong tren mat tuong son kem, truot xuong cham; anh chieu
+    vang hat ngang; mot diem do nho ngoai net o hau canh
+- id: shot_02
+  beat: body
+  set: phong_khach
+  lane: parallax
+  move: drift_right
+  duration: 5.0
+  seed: 102
+  characters:
+  - father
+  motifs:
+  - quat_cay
+  - khan_sua
+  prompt: bo keo quat cay cu ra giua phong khach, khan sua ke o vat vai, san lot chieu
+    truc, cua nhom kinh mo hoi nuoc phia sau
+- id: shot_03
+  beat: body
+  set: phong_khach
+  lane: i2v
+  move: static
+  duration: 4.0
+  seed: 103
+  characters: []
+  motifs:
+  - quat_cay
+  prompt: quan ao tre em treo tren gian phoi trong nha, bay nhe truoc quat cay dang
+    quay, anh chieu vang
+- id: shot_04
+  beat: body
+  set: phong_khach
+  lane: parallax
+  move: push_in
+  duration: 6.0
+  seed: 104
+  characters:
+  - moonie
+  motifs:
+  - ghe_nhua_do
+  - tho_bong
+  prompt: Moonie 2 tuoi ngoi ghe nhua do, om tho bong tai ru, ngua mat nhin quan ao
+    bay, toc to bay nhe
+- id: shot_05
+  beat: body
+  set: phong_khach
+  lane: parallax
+  move: drift_left
+  duration: 5.5
+  seed: 105
+  characters:
+  - father
+  - moonie
+  motifs:
+  - coc_sut
+  prompt: bo ngoi bet xuong chieu truc canh ghe cua Moonie, coc su sut mieng dat tren
+    san, ca hai cung nhin ve phia quat
+- id: shot_06
+  beat: body
+  set: phong_khach
+  lane: i2v
+  move: static
+  duration: 4.0
+  seed: 106
+  characters:
+  - moonie
+  motifs:
+  - tho_bong
+  prompt: Moonie dua tay cham vao vat ao dang bay, ngon tay nho xoe ra, chuyen dong
+    rat cham
+- id: shot_07
+  beat: rest
+  set: phong_khach
+  lane: parallax
+  move: float
+  duration: 7.0
+  seed: 107
+  characters:
+  - father
+  - moonie
+  motifs:
+  - chieu_truc
+  - quat_cay
+  prompt: trung canh tinh, hai bo con ngoi im tren chieu truc, quat quay deu, anh
+    chieu vang chuyen dan sang cam, bui bay trong nang
+- id: shot_08
+  beat: end
+  set: phong_khach
+  lane: parallax
+  move: static
+  duration: 5.0
+  seed: 108
+  characters:
+  - father
+  - moonie
+  motifs:
+  - chieu_truc
+  prompt: khung hinh rong, hai bo con nho trong phong, quan ao van bay, anh sang gan
+    tat
+publish:
+  youtube:
+    title: The day the walls sweat
+    description: A humid afternoon in a Hanoi apartment.
+    tags:
+    - cozy
+    - animation
+    - father
+    - daughter
+    - slowlife
+  facebook:
+    caption: Mua nom ve, tuong ri nuoc, quan ao ba ngay khong kho.
+    variants:
+    - Mua nom. Tuong ri nuoc ca tuan, quan ao phoi mai khong kho.
+    - Nha ai keo quat cay ra giua phong hong quan ao khong? Nha minh thi co.
+    - Con be ngoi ghe nhua do, nhin quan ao bay. Chieu Ha Noi am.
+    - Ba ngay roi khong co nang. Bo bay ra mot cai quat va mot buoi chieu.
+  x:
+    text: The walls sweat. The clothes never dry. He drags the old fan out anyway.

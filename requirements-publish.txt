@@ -1,0 +1,8 @@
+# Chi dung tren GitHub Actions. Khong cai tren may nao cua ban.
+pyyaml>=6.0
+numpy>=2.0
+opencv-python-headless>=4.10
+requests>=2.32
+requests-oauthlib>=2.0
+google-api-python-client>=2.140
+google-auth>=2.34

@@ -1,0 +1,55 @@
+{
+  "stages": {
+    "assemble": "done",
+    "qc": "done",
+    "animate": "done"
+  },
+  "shots": {
+    "shot_01": {
+      "clip": "done"
+    },
+    "shot_02": {
+      "clip": "done"
+    },
+    "shot_03": {
+      "clip": "done"
+    },
+    "shot_04": {
+      "clip": "done"
+    },
+    "shot_05": {
+      "clip": "done"
+    },
+    "shot_06": {
+      "clip": "done"
+    },
+    "shot_07": {
+      "clip": "done"
+    },
+    "shot_08": {
+      "clip": "done"
+    }
+  },
+  "log": [
+    {
+      "t": "2026-11-04 09:12:05",
+      "msg": "stage assemble -> done"
+    },
+    {
+      "t": "2026-11-04 09:12:12",
+      "msg": "stage qc -> done"
+    },
+    {
+      "t": "2026-11-04 09:14:20",
+      "msg": "stage animate -> done"
+    },
+    {
+      "t": "2026-11-04 09:14:55",
+      "msg": "stage assemble -> done"
+    },
+    {
+      "t": "2026-11-04 09:15:03",
+      "msg": "stage qc -> done"
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+# JOB MAU — publish.enabled=false nen khong bao gio bi dang.
+# Copy file nay lam mau cho job that, roi bat enabled.
 id: 2026-11-10_nom-am-hong-quan-ao
 title: The day the walls sweat
 logline: 'Mua nom. Tuong ri nuoc, quan ao phoi ba ngay khong kho. Bo keo quat cay
@@ -120,6 +122,7 @@ shots:
   prompt: khung hinh rong, hai bo con nho trong phong, quan ao van bay, anh sang gan
     tat
 publish:
+  enabled: false
   youtube:
     title: The day the walls sweat
     description: A humid afternoon in a Hanoi apartment.

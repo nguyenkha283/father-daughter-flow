@@ -50,6 +50,18 @@
     {
       "t": "2026-11-04 09:15:03",
       "msg": "stage qc -> done"
+    },
+    {
+      "t": "2026-11-04 09:30:55",
+      "msg": "stage animate -> done"
+    },
+    {
+      "t": "2026-11-04 09:31:30",
+      "msg": "stage assemble -> done"
+    },
+    {
+      "t": "2026-11-04 09:31:37",
+      "msg": "stage qc -> done"
     }
   ]
 }

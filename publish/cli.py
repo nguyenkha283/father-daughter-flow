@@ -29,6 +29,10 @@ def find_next() -> Path | None:
             job = schema.load(yml)
         except Exception:
             continue
+        ok, why = schema.publishable(job)
+        if not ok:
+            print(f"  bo qua {yml.name}: {why}")
+            continue
         st = state.State(ROOT / "jobs" / job.id / "state.json")
         if st.stage("qc") == "done" and st.stage("publish") == "pending":
             cands.append((job.id, yml))
@@ -43,6 +47,11 @@ def run(job_path: Path, dry: bool = False) -> dict:
 
     if not video.exists():
         raise FileNotFoundError(f"chua co video: {video}")
+
+    ok, why = schema.publishable(job)
+    if not ok:
+        raise SystemExit(f"job nay khong duoc phep dang ({why}). "
+                         "Dat publish.enabled: true khi that su muon dang.")
 
     # Cong chan cung: QC chay lai ngay truoc khi dang, khong tin state cu.
     res = qc.run(video, job)

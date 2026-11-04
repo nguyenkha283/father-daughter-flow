@@ -13,3 +13,4 @@ assets/music/*
 assets/sfx/*
 !assets/**/.gitkeep
 loras/
+jobs/*/out/publish.json

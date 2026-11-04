@@ -177,6 +177,22 @@ def validate(job: Job) -> list[str]:
     return e
 
 
+def publishable(job: Job) -> tuple[bool, str]:
+    """
+    Job co duoc phep dang khong. Mac dinh la KHONG.
+
+    Ly do mac dinh tu choi: job mau, job thu nghiem va job dang lam do deu
+    nam cung thu muc voi job that. Mot cron chay nham la video hong len thang
+    kenh that. Phai bat tay tung job thi moi dang.
+    """
+    if not (job.publish or {}).get("enabled", False):
+        return False, "publish.enabled chua bat"
+    errs = validate(job)
+    if errs:
+        return False, f"job khong hop le: {errs[0]}"
+    return True, "ok"
+
+
 def warnings(job: Job) -> list[str]:
     """Khong chan publish, nhung nen xem lai."""
     w = []

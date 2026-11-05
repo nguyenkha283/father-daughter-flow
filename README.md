@@ -43,14 +43,25 @@ pip install transformers
 /brief "logline cua ban"              # Claude viet jobs/<ngay>_<slug>.yaml
 python run.py status  jobs/<job>.yaml # kiem tra dat World Bible chua
 
-python run.py export  jobs/*.yaml     # gom 10 job thanh 1 batch cho Colab
+python run.py export  jobs/*.yaml          # gom 10 job thanh 1 batch
+python -m pipeline.sync push-batch        # day len Drive cho Colab
 #   -> mo colab/Father_and_Daughter_Worker.ipynb, chay ~2 gio
-rclone sync gdrive:father-and-daughter/outbox ./colab_bridge/outbox
+python -m pipeline.sync pull-colab        # thu ket qua ve
 python run.py import  jobs/<job>.yaml
 
 python run.py all     jobs/<job>.yaml --encoder h264_nvenc
 #   depth -> parallax -> assemble -> QC
+
+python -m pipeline.sync push-final        # day video da qua QC len Drive
+git add jobs/*/state.json && git commit -m "qc xong" && git push
 ```
+
+Lan dau chay `python -m pipeline.sync check` de kiem tra rclone va tao du 5
+thu muc tren Drive.
+
+**Hai buoc cuoi deu bat buoc.** GitHub Actions lay *video* tu Drive nhung lay
+*trang thai qc/publish* tu git. Thieu mot trong hai thi cron khong tim thay
+gi de dang va khong bao loi gi ca.
 
 QC pass thi GitHub Actions tu dang theo cron. Share pack cho Facebook Groups
 nam o `jobs/<id>/out/share-pack.md` — ban tu paste, **toi da 5 group/ngay**.

@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pipeline import schema, assemble, qc, state
 from pipeline.parallax import render
+from tests.test_parallax import make_scene
 
 ROOT = Path(__file__).resolve().parents[1]
 JOB = schema.load(ROOT / "jobs/example.yaml")
@@ -16,7 +17,13 @@ TMP = ROOT / "tests" / "_tmp"
 MOVES = ["static", "drift_right", "drift_up", "push_in",
          "drift_left", "pull_out", "float", "static"]
 
+# Tu dung canh gia lap neu chua co: test nay phai chay doc lap, khong duoc
+# ngam phu thuoc vao test_parallax da chay truoc.
+if not (TMP / "still.png").exists():
+    make_scene()
+
 st = state.State(JDIR / "state.json")
+st.reconcile([s.id for s in JOB.shots], JDIR)
 print(f"== job {JOB.id}  |  {len(JOB.shots)} shot  |  {JOB.duration}s ==\n")
 
 t0 = time.time()

@@ -54,6 +54,37 @@ class State:
     def has(self, shot_id: str, artifact: str) -> bool:
         return self.data["shots"].get(shot_id, {}).get(artifact) == "done"
 
+    # -- doi chieu voi dia --
+    @staticmethod
+    def artifact_path(jdir: Path, shot_id: str, artifact: str) -> Path:
+        return {
+            "still": jdir / "stills" / f"{shot_id}.png",
+            "depth": jdir / "depth" / f"{shot_id}.png",
+            "clip": jdir / "clips" / f"{shot_id}.mp4",
+        }[artifact]
+
+    def reconcile(self, shot_ids: Iterable[str], jdir: Path) -> list[str]:
+        """
+        Xoa cac co 'done' ma file tuong ung khong con tren dia.
+
+        State va dia co the lech nhau that: don dia, rclone sync xoa nham,
+        hoac copy do dang. Neu khong doi chieu thi pipeline se skip buoc do
+        roi chet o buoc sau voi mot loi kho hieu.
+        """
+        cleared = []
+        for sid in shot_ids:
+            for art in ARTIFACTS:
+                if (self.data["shots"].get(sid, {}).get(art) == "done"
+                        and not self.artifact_path(jdir, sid, art).exists()):
+                    self.data["shots"][sid].pop(art, None)
+                    cleared.append(f"{sid}/{art}")
+        if cleared:
+            self._log(f"reconcile: xoa co cho {len(cleared)} artifact mat file")
+            for st in ("animate", "assemble", "qc", "publish"):
+                self.data["stages"].pop(st, None)
+            self.save()
+        return cleared
+
     def todo(self, shot_ids: Iterable[str], artifact: str) -> list[str]:
         """Danh sach shot con thieu artifact nay. Day la ham quan trong nhat."""
         return [s for s in shot_ids if not self.has(s, artifact)]

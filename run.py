@@ -35,7 +35,12 @@ def _load(p: Path):
     for w in schema.warnings(job):
         print("  warn:", w)
     jdir = ROOT / "jobs" / job.id
-    return job, jdir, state.State(jdir / "state.json")
+    st = state.State(jdir / "state.json")
+    cleared = st.reconcile([s.id for s in job.shots], jdir)
+    if cleared:
+        print(f"  reconcile: {len(cleared)} artifact mat file, da xoa co: "
+              f"{', '.join(cleared[:6])}{' ...' if len(cleared) > 6 else ''}")
+    return job, jdir, st
 
 
 # --------------------------------------------------------------------------- #
